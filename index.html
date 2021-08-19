@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digi clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="digi.css">
+
+</head>
+
+<body>
+  <div class="digiImg">
+    <div id="ck1" class="mg1"></div>
+    <div id="ck2" class="mg2"></div>
+    <div class="mgd"></div>
+    <div id="ck3" class="mg3"></div>
+    <div id="ck4" class="mg4"></div>
+    <div class="mgd"></div>
+    <div id="ck5" class="mg5"></div>
+    <div id="ck6" class="mg6"></div>
+  </div>
+  <script>
+    const refresh = () => {
+      const nt = new Date();
+      const
+        nh = nt.getHours(), //15
+        nm = nt.getMinutes(), //39
+        ns = nt.getSeconds(); //50
+
+      const
+        nk1 = Math.floor(nh / 10),
+        nk2 = nh % 10,
+        nk3 = Math.floor(nm / 10),
+        nk4 = nm % 10,
+        nk5 = Math.floor(ns / 10),
+        nk6 = ns % 10;
+
+      document.getElementById("ck1").className = `mg${nk1}`;
+      document.getElementById("ck2").className = `mg${nk2}`;
+      document.getElementById("ck3").className = `mg${nk3}`;
+      document.getElementById("ck4").className = `mg${nk4}`;
+      document.getElementById("ck5").className = `mg${nk5}`;
+      document.getElementById("ck6").className = `mg${nk6}`;
+
+      // document.getElementsByClassName("mgd")[0].style.opacity = 1;
+      // document.getElementsByClassName("mgd")[1].style.opacity = 1;
+      // setTimeout(() => {
+      //   document.getElementsByClassName("mgd")[0].style.opacity = 0;
+      //   document.getElementsByClassName("mgd")[1].style.opacity = 0;
+      // }, 500);
+      document.querySelectorAll('.mgd').forEach(e => {
+        e.style.opacity = 1;
+        setTimeout(() => {
+          e.style.opacity = 0;
+        }, 500);
+      });
+      // setTimeout(refresh, 1000);
+    }
+    setInterval(refresh, 1000);
+    refresh();
+  </script>
+
+<div class="clock-container">
+  <div class="date">
+      <span id="day">Day</span>,
+      <span id="month">Month</span>,
+      <span id="day-number">00</span>,
+      <span id="year">year</span>
+  </div>
+  <div class="time">
+      <span id="hour">00</span>:
+      <span id="minute">00</span>:
+      <span id="second">00</span>
+      <span id="session">AM</span>
+  </div>
+</div>
+<script>
+  function getdate(){
+    let dateTime = new Date();
+    let year = dateTime.getFullYear();
+    let month = dateTime.getMonth();
+    let monthList = ["一月", "二月", "三月", "四月", "五月", "六月",
+                    "七月", "八月", "九月", "十月", "十一月", "十二月"];
+
+    let monthName = monthList[month];
+    let dayList =["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let dayNum = dateTime.getDay();
+    let day = dayList[dayNum];
+    let date = dateTime.getDate();
+    let printDay = document.getElementById("day");
+    let printMonthName = document.getElementById("month");
+    let printDate = document.getElementById("day-number");
+    let printYear = document.getElementById("year");
+    printDay.textContent = day;
+    printMonthName.textContent = monthName;
+    printDate.textContent = parseInt(date) < 10 ? `0${date}`: date
+    
+    printYear.textContent = year;
+
+}
+function setClock(){
+    let dateTime = new Date();
+    let hour = dateTime.getHours();
+    let localHour = hour-12;
+    let minute = dateTime.getMinutes();
+    let second = dateTime.getSeconds();
+    let printHour = document.getElementById("hour");
+    let printMinute = document.getElementById("minute");
+    let printSecond = document.getElementById("second");
+    printHour.innerText = hour < 10 ? `0${hour}`: `0${localHour}`;
+    printMinute.textContent = minute < 10 ? `0${minute}`:minute;
+    printSecond.textContent = second < 10 ? `0${second}`: second;
+
+    let session = document.getElementById("session");
+    session.textContent = hour >= 12 ? "PM" :"AM";
+    
+    //setInterval(setClock, 500);
+}
+getdate();
+setInterval(getdate,1000);
+setInterval(setClock, 500);
+setClock();
+</script>
+</body>
+
+</html>
